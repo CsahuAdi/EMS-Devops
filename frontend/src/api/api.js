@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const EVENT_API = "http://localhost:5000";
-const REG_API = "http://localhost:8000";
+const REG_API = "http://localhost:5002";
 
 export const getEvents = () => axios.get(`${EVENT_API}/events`);
 export const getEventById = (id) => axios.get(`${EVENT_API}/events/${id}`);
