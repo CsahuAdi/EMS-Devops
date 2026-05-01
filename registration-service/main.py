@@ -1,8 +1,17 @@
 from fastapi import FastAPI
 from routes.registrations import router as registrations_router
 from database import connect_to_mongo, close_mongo_connection
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # frontend
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(registrations_router)
 
