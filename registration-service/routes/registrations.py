@@ -3,6 +3,8 @@ from fastapi.responses import JSONResponse
 from models import RegistrationCreate, RegistrationOut
 import database
 import os
+from dotenv import load_dotenv
+load_dotenv()
 import httpx
 from crud import (
     create_registration,
@@ -15,7 +17,7 @@ from pymongo.errors import DuplicateKeyError
 
 router = APIRouter()
 
-EVENT_SERVICE_URL = os.environ.get("EVENT_SERVICE_URL", "http://localhost:5000")
+EVENT_SERVICE_URL = os.getenv("EVENT_SERVICE_URL", "http://192.168.49.2:30500")
 
 
 @router.get("/health")
@@ -25,7 +27,7 @@ async def health():
 
 @router.post("/registrations", status_code=201)
 async def post_registration(payload: RegistrationCreate):
-    # validate event exists by calling Event service
+    # validate event exists by calling Event service    
     async with httpx.AsyncClient() as client:
         try:
             resp = await client.get(
