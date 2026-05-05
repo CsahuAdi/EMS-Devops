@@ -9,26 +9,22 @@ pipeline {
 
     stages {
         stage('Deploy to EC2') {
-            steps {
-                sh '''
+    steps {
+        sh '''
 ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << EOF
 set -e
 cd ${APP_DIR}
-git pull origin main
 
-if command -v docker-compose >/dev/null 2>&1; then
-    docker-compose down
-    docker-compose up --build -d
-else
-    docker compose down
-    docker compose up --build -d
-fi
+git fetch origin main
+git reset --hard origin/main
 
+docker compose down
+docker compose up --build -d
 docker ps
 EOF
 '''
-            }
-        }
+    }
+}
 
         stage('Verify Deployment') {
             steps {
