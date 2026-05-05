@@ -11,26 +11,35 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 sh '''
-                ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << EOF
-                cd ${APP_DIR}
-                git pull origin main
-                docker compose down
-                docker compose up --build -d
-                docker ps
-                EOF
-                '''
+ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
+set -e
+cd /home/ubuntu/EMS_devops
+git pull origin main
+
+if command -v docker-compose >/dev/null 2>&1; then
+    docker-compose down
+    docker-compose up --build -d
+else
+    docker compose down
+    docker compose up --build -d
+fi
+
+docker ps
+EOF
+'''
             }
         }
 
         stage('Verify Deployment') {
             steps {
                 sh '''
-                ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << EOF
-                curl -I http://localhost:3000 || true
-                curl http://localhost:5000/health || true
-                curl http://localhost:5002/health || true
-                EOF
-                '''
+ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
+docker ps
+curl -I http://localhost:3000 || true
+curl http://localhost:5000/health || true
+curl http://localhost:5002/health || true
+EOF
+'''
             }
         }
     }
