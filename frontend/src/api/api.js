@@ -1,7 +1,7 @@
   import axios from "axios";
 
-  const EVENT_API = "http://192.168.49.2:30500";
-  const REG_API = "http://192.168.49.2:30502";
+  const EVENT_API = "http://65.2.168.251:5000";
+  const REG_API = "http://65.2.168.251:5002";
 
   export const getEvents = () => axios.get(`${EVENT_API}/events`);
   export const getEventById = (id) => axios.get(`${EVENT_API}/events/${id}`);
