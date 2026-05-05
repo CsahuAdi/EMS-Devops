@@ -4,7 +4,7 @@ pipeline {
     environment {
         EC2_HOST = "65.2.168.251"
         EC2_USER = "ubuntu"
-        APP_DIR = "/home/ubuntu/EMS_Devops"
+        APP_DIR = "/home/ubuntu/EMS-Devops"
     }
 
     stages {
