@@ -18,8 +18,8 @@ cd ${APP_DIR}
 git fetch origin main
 git reset --hard origin/main
 
-docker compose down
-docker compose up --build -d
+docker-compose down
+docker-compose up --build -d
 docker ps
 EOF
 '''
