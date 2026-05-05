@@ -1,1 +1,8 @@
 minikube-linux-amd64
+.aws/
+terraform.tfstate
+awscliv2.zip
+aws
+.terraform
+.terraform.lock.hcl
+terraform.tfstate.backup
